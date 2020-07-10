@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "借用新增修改";
+
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">军械名称</label>
+            <div class="layui-input-block">
+                <select name="Borrow_ArmyID" id="Borrow_ArmyID"  lay-filter="Borrow_ArmyID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">借用仓库</label>
+            <div class="layui-input-block">
+                <select name="Borrow_WarehouseID" id="Borrow_WarehouseID" lay-filter="Borrow_WarehouseID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>       
+        <div class="layui-form-item">
+            <div class="layui-form-item">
+                <label class="layui-form-label">军械批次</label>
+                <div class="layui-input-block">
+                    <select name="Borrow_Batch" id="Borrow_Batch" lay-filter="Borrow_Batch">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div> 
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">可借数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="KJ_Num" id="KJ_Num" disabled   autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">借用数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Borrow_Num" id="Borrow_Num" lay-verify="required|num" placeholder="请输入数量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">借用人</label>
+            <div class="layui-input-block">
+                <select name="Borrow_UserID" id="Borrow_UserID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提取人姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Borrow_TransportName" id="Borrow_TransportName" lay-verify="required" placeholder="请输入配送人姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系方式</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Borrow_TransportPhone" id="Borrow_TransportPhone" lay-verify="required" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        
+        <div>
+            <button class="layui-btn layui-btn-primary layui-btn-sm" id="Ord_Quxiao" style="float:right">取消</button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" lay-submit lay-filter="Ord-Borrow-Add-search" style="float:right;margin-right:20px">确定</button>
+        </div>
+    </div>
+</form>
+<script src="../../Customiz/scripts/jquery-3.4.1.min.js"></script>
+<script src="../../Customiz/layui/layui.js"></script>  
+<script>
+   
+
+
+    layui.use(['table'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        $("#Ord_Quxiao").click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+            parent.layer.close(index); //再执行关闭
+        });
+
+        //根据批次获取是否军械批次重复
+        function selectcount(value) {
+            var count = 0;
+            $.ajax({
+                url: '/Army/GetBorrowBatchCount',
+                dataType: 'json',
+                type: 'Post',
+                async: false,
+                data: { Army_Batch: value },
+                success: function (data) {
+                    count= data;
+                }
+            })
+            return count;
+        }
+
+        //用户(部门操作员id)
+        $.ajax({
+            url: '/User/GetUser',
+            dataType: 'json',
+            type: 'Post',
+            data:{ name:"", dept:"", role:"2"},
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Borrow_UserID').append(new Option(item.User_Name, item.User_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+        //军械名称
+        $.ajax({
+            url: '/Army/GetArmyData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Borrow_ArmyID').append(new Option(item.Army_Name, item.Army_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+       
+        //表单验证
+        form.verify({
+            num: function (value) {
+                if (!/^[0-9]+$/.test(value)) {
+                    return '请输入数字！';
+                } 
+                var num=$("#KJ_Num").val();
+                if(Number(num)<value)
+                {
+                    return '大于可借数量！';
+                }
+
+            }
+
+        });
+
+        form.on('select(Borrow_ArmyID)', function(data){
+            $("#Borrow_WarehouseID").html("")
+            $("#Borrow_Batch").html("")
+            $("#KJ_Num").val("")
+            $('#Borrow_WarehouseID').append(new Option("", "")); // 下拉菜单里添加元素
+            $('#Borrow_Batch').append(new Option("", "")); // 下拉菜单里添加元素
+            //军械仓库
+            $.ajax({
+                url: '/Army/GetWarehouseByReport',
+                dataType: 'json',
+                data:{Army_ID:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#Borrow_WarehouseID').append(new Option(item.Borrow_WarehouseName, item.Borrow_WarehouseID)); // 下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+                    //重新渲染 固定写法
+                }
+            })
+        })
+
+        form.on('select(Borrow_WarehouseID)', function(data){
+            $("#Borrow_Batch").html("")
+            $("#KJ_Num").val("")
+            $('#Borrow_Batch').append(new Option("", "")); // 下拉菜单里添加元素
+            var army_Name=  $('select[name="Borrow_ArmyID"]').next().find("input").val();
+            //军械批次
+            $.ajax({
+                url: '/Army/GetBatchByReport',
+                dataType: 'json',
+                data:{Army_Name:army_Name,WarehouseID:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#Borrow_Batch').append(new Option(item.Borrow_Batch, item.Borrow_Batch)); // 下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+                    //重新渲染 固定写法
+                }
+            })
+        })
+        form.on('select(Borrow_Batch)', function(data){
+            var army_Name=  $('select[name="Borrow_ArmyID"]').next().find("input").val();
+            var WarehouseName=  $('select[name="Borrow_WarehouseID"]').next().find("input").val();
+            //军械批次
+            $.ajax({
+                url: '/Army/GetCountByReport',
+                dataType: 'json',
+                data:{Army_Name:army_Name,WarehouseName:WarehouseName,Batch:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $("#KJ_Num").val(data);
+                }
+            })
+        })
+        //监听提交
+        form.on('submit(Ord-Borrow-Add-search)', function (data) {
+            var field = data.field;
+            var Borrow_ArmyIDBool=true;
+            var Borrow_WarehouseIDBool=true;
+            var Borrow_UserIDBool=true;
+            var Borrow_BatchIDBool=true;
+            if($("#Borrow_ArmyID").val().length<=0)
+            {
+                Borrow_ArmyIDBool=false;
+                layer.msg('请选择军械名称！', { icon: 7 });
+            }
+            if($("#Borrow_WarehouseID").val().length<=0)
+            {
+                Borrow_WarehouseIDBool=false;
+                layer.msg('请选择仓库！', { icon: 7 });
+            }
+            
+            if($("#Borrow_Batch").val().length<=0)
+            {
+                Borrow_BatchIDBool=false;
+                layer.msg('请选择批次！', { icon: 7 });
+            }
+            if($("#Borrow_UserID").val().length<=0)
+            {
+                Borrow_UserIDBool=false;
+                layer.msg('请选择借用人！', { icon: 7 });
+            }
+            if(Borrow_ArmyIDBool==true&&Borrow_WarehouseIDBool==true&&Borrow_WarehouseIDBool==true&&Borrow_BatchIDBool==true)
+            {
+                if(@ViewBag.Type==1)
+                {
+                    $.ajax({
+                        cache: false,
+                        type: "Post",
+                        async: false,
+                        url: '/Army/AddBorrow', //模拟接口
+                        data: {
+                            Borrow_ArmyID: field.Borrow_ArmyID,
+                            Borrow_WarehouseID: field.Borrow_WarehouseID,
+                            Borrow_Batch:field.Borrow_Batch,
+                            Borrow_Num: field.Borrow_Num,
+                            Borrow_UserID:field.Borrow_UserID ,
+                            Borrow_TransportName:field.Borrow_TransportName ,
+                            Borrow_TransportPhone:field.Borrow_TransportPhone         
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == true) {
+                                parent.layer.msg("新增成功！", { icon: 1 });
+
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                               
+
+                                
+
+                            } else {
+                                parent.layer.msg("新增失败！", { icon: 2 });
+                            }
+                        }
+                    })
+                }
+                
+            }
+        })
+        
+    })
+
+    </script>

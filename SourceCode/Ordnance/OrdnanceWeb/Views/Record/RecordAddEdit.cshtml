@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "巡查记录";
+
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">巡查人</label>
+            <div class="layui-input-block">
+                <select name="Record_UserID" id="Record_UserID" lay-filter="Record_UserID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">维护记录</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" name="Record_Remarks" id="Record_Remarks"></textarea>
+            </div>
+        </div>  
+       <div>
+            <button class="layui-btn layui-btn-primary layui-btn-sm"  id="Ord_Quxiao" style="float:right">取消</button>
+           <button class="layui-btn layui-btn-normal layui-btn-sm" lay-submit lay-filter="Ord-Record-Add-search" style="float:right;margin-right:20px">确定</button>
+        </div>
+    </div>
+</form>
+<script src="../../Customiz/scripts/jquery-3.4.1.min.js"></script>
+<script src="../../Customiz/layui/layui.js"></script>  
+<script>
+
+
+    layui.use(['table'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+
+
+
+        $("#Ord_Quxiao").click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+            parent.layer.close(index); //再执行关闭
+        });
+
+        //用户(巡查员id)
+        $.ajax({
+            url: '/User/GetUser',
+            dataType: 'json',
+            type: 'Post',
+            async: false,
+            data:{ name:"", dept:"", role:"3"},
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Record_UserID').append(new Option(item.User_Name, item.User_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+            }
+        })
+        //重新渲染 固定写法
+        if(@ViewBag.Type==2) //区别编辑：1还是新增：2 
+        {
+            $("#Record_Remarks").val('@ViewBag.Remarks');
+            var select = 'dd[lay-value=' + @ViewBag.UserID + ']';
+            $('#Record_UserID').siblings("div.layui-form-select").find('dl').find(select).click();
+        }
+        //表单验证
+        form.verify({
+
+
+        });
+
+        //监听提交
+        form.on('submit(Ord-Record-Add-search)', function (data) {
+            var field = data.field;
+            //提交 Ajax 成功后，静态更新表格中的数据
+            if(@ViewBag.Type==1)
+            {
+                $.ajax({
+                    cache: false,
+                    type: "Post",
+                    async: false,
+                    url: '/Record/AddRecord', //模拟接口
+                    data: {
+                        Record_UserID: field.Record_UserID,
+                        Record_Remarks: field.Record_Remarks
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == true) {
+                            parent.layer.msg("新增成功！", { icon: 1 });
+
+                            //window.parent.$(".layui-laypage-btn").click();//刷新父窗体列表
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+
+                        } else {
+                            parent.layer.msg("新增失败！", { icon: 2 });
+                        }
+                    }
+                })
+
+            }else
+            {
+                $.ajax({
+                    cache: false,
+                    type: "Post",
+                    async: false,
+                    url: '/Record/UpdateRecord', //模拟接口
+                    data: {
+                        Record_ID:"@ViewBag.ID",
+                        Record_UserID: field.Record_UserID,
+                        Record_Remarks: field.Record_Remarks
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == true) {
+                            parent.layer.msg("修改成功！", { icon: 1 });
+
+                            //window.parent.$(".layui-laypage-btn").click();//刷新父窗体列表
+
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+
+
+
+                        } else {
+                            parent.layer.msg("修改失败！", { icon: 2 });
+                        }
+                    }
+                })
+            }
+
+
+
+        });
+
+
+    });
+    </script>

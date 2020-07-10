@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "User";
+
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+               
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属角色</label>
+                    <div class="layui-input-block">
+                        <select name="role" id="role">
+                            <option value=""></option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-user-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button id="add" class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+            </div>
+
+            <table id="Ord-user-back-manage" lay-filter="Ord-user-back-manage"></table>     
+            <script type="text/html" id="table-useradmin-admin">
+                @if (ViewBag.RoleID == "0")
+                {
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+			layui.use( 'table',function() {
+			    var $ = layui.$,
+					form = layui.form,
+					table = layui.table;
+                
+			    if (@ViewBag.RoleID != "0")
+			    {
+			        //禁止按钮
+			        $('#add').addClass('layui-btn-disabled').attr('disabled', "true");
+			    }
+
+				//角色
+				$.ajax({
+					url: '/User/GetRoleData',
+					dataType: 'json',
+					type: 'Post',
+					success: function(data) {
+						$.each(data.data, function(index, item) {
+						    $('#role').append(new Option(item.Role_Name, item.Role_ID)); // 下拉菜单里添加元素
+						});
+						//$("#role").val("1");//atype是select的id
+						layui.form.render("select");
+						//重新渲染 固定写法
+					}
+				})
+			   
+				//监听搜索
+				form.on('submit(LAY-user-back-search)', function(data) {
+					var field = data.field;
+
+					//执行重载
+					table.reload('Ord-user-back-manage', {
+						where: field
+					});
+				});
+
+			    //用户管理
+				table.render({
+				    elem: '#Ord-user-back-manage',
+				    url: '/User/GetUser',
+                    page:true,
+				    cols: [
+                        [ {
+                            field: 'User_Name',
+                            title: '用户名'
+                        },{
+                            field: 'Role_Name',
+                            title: '所属角色'
+                        }, {
+                            field: 'User_CreateTime',
+                            title: '创建时间'
+                        }, {
+                            field: 'User_Status',
+                            title: '账号状态',
+                            templet: function (data) {
+                                if (data.User_Status == 0) { return "禁用"; }
+                                if (data.User_Status == 1) { return "启用"; }
+                            }
+                        }, {
+                            title: '操作',
+                            align: 'center',
+                            fixed: 'right',
+                            toolbar: '#table-useradmin-admin'
+                        }]
+				    ],
+				    text: '对不起，加载出现异常！'
+				});
+
+			    //监听工具条（用户管理编辑）
+				table.on('tool(Ord-user-back-manage)', function (obj) {
+				    var data = obj.data;
+				    if (obj.event === 'edit') {
+				        var tr = $(obj.tr);
+
+				        layer.open({
+				            type: 2,
+				            title: '编辑用户',
+				            content: '/User/UserAddEdit?type=2&ID=' + data.User_ID,
+				            area: ['420px', '400px']
+				         
+				        })
+				    }
+				    else if (obj.event === 'del') {
+				        layer.confirm('确定删除吗？', function (index) {
+				            if (data.User_Name == 'admin') {
+				                layer.msg('admin账户不允许删除！', { icon: 7 });
+				            }
+				            else {
+				                $.ajax({
+				                    type: "Post",
+				                    url: '/User/DeleteUser', //配置删除功能
+				                    dataType: 'json',
+				                    data: {
+				                        User_ID: data.User_ID
+				                    },
+				                    success: function (data) {
+				                        if (data == true) {
+				                            layer.msg('已删除', { icon: 1 });
+				                            table.reload('Ord-user-back-manage');
+				                        } else {
+				                            layer.msg('删除失败', { icon: 2 });
+				                        }
+
+				                    }
+				                });
+				            }
+				            
+				        });
+				    }
+				});
+				//事件
+				var active = {
+					add: function() {
+						layer.open({
+							type: 2,
+							title: '添加账号',
+							content: '/User/UserAddEdit?type=1',
+							area: ['420px', '400px']
+						});
+					}
+				}
+				$('.layui-btn.layuiadmin-btn-admin').on('click', function() {
+					var type = $(this).data('type');
+					active[type] ? active[type].call(this) : '';
+				});
+			});
+</script>

@@ -1,0 +1,218 @@
+﻿
+@{
+    ViewBag.Title = "新增修改";
+
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">军械名称</label>
+            <div class="layui-input-block">
+                <select name="Scrap_ArmyID" id="Scrap_ArmyID"  lay-filter="Scrap_ArmyID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报废仓库</label>
+            <div class="layui-input-block">
+                <select name="Scrap_WarehouseID" id="Scrap_WarehouseID" lay-filter="Scrap_WarehouseID">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>       
+        <div class="layui-form-item">
+            <div class="layui-form-item">
+                <label class="layui-form-label">军械批次</label>
+                <div class="layui-input-block">
+                    <select name="Scrap_Batch" id="Scrap_Batch" lay-filter="Scrap_Batch">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div> 
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">在库数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="KJ_Num" id="KJ_Num" disabled   autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">报废数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Scrap_Num" id="Scrap_Num" lay-verify="required|num" placeholder="请输入数量" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+ 
+        <div>
+            <button class="layui-btn layui-btn-primary layui-btn-sm" id="Ord_Quxiao" style="float:right">取消</button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" lay-submit lay-filter="Ord-Scrap-Add-search" style="float:right;margin-right:20px">确定</button>
+        </div>
+    </div>
+</form>
+<script src="../../Customiz/scripts/jquery-3.4.1.min.js"></script>
+<script src="../../Customiz/layui/layui.js"></script>  
+<script>
+   
+
+
+    layui.use(['table'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        $("#Ord_Quxiao").click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+            parent.layer.close(index); //再执行关闭
+        });
+ 
+        //军械名称
+        $.ajax({
+            url: '/Army/GetArmyData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Scrap_ArmyID').append(new Option(item.Army_Name, item.Army_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+       
+        //表单验证
+        form.verify({
+            num: function (value) {
+                if (!/^[0-9]+$/.test(value)) {
+                    return '请输入数字！';
+                } 
+                var num=$("#KJ_Num").val();
+                if(Number(num)<value)
+                {
+                    return '大于可报废数量！';
+                }
+
+            }
+
+        });
+
+        form.on('select(Scrap_ArmyID)', function(data){
+            $("#Scrap_WarehouseID").html("")
+            $("#Scrap_Batch").html("")
+            $("#KJ_Num").val("")
+            $('#Scrap_WarehouseID').append(new Option("", "")); // 下拉菜单里添加元素
+            $('#Scrap_Batch').append(new Option("", "")); // 下拉菜单里添加元素
+            //军械仓库
+            $.ajax({
+                url: '/Army/GetWarehouseByReport',
+                dataType: 'json',
+                data:{Army_ID:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#Scrap_WarehouseID').append(new Option(item.Borrow_WarehouseName, item.Borrow_WarehouseID)); // 下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+                    //重新渲染 固定写法
+                }
+            })
+        })
+
+        form.on('select(Scrap_WarehouseID)', function(data){
+            $("#Scrap_Batch").html("")
+            $("#KJ_Num").val("")
+            $('#Scrap_Batch').append(new Option("", "")); // 下拉菜单里添加元素
+            var army_Name=  $('select[name="Scrap_ArmyID"]').next().find("input").val();
+            //军械批次
+            $.ajax({
+                url: '/Army/GetBatchByReport',
+                dataType: 'json',
+                data:{Army_Name:army_Name,WarehouseID:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#Scrap_Batch').append(new Option(item.Borrow_Batch, item.Borrow_Batch)); // 下拉菜单里添加元素
+                    });
+                    layui.form.render("select");
+                    //重新渲染 固定写法
+                }
+            })
+        })
+        form.on('select(Scrap_Batch)', function(data){
+            var army_Name=  $('select[name="Scrap_ArmyID"]').next().find("input").val();
+            var WarehouseName=  $('select[name="Scrap_WarehouseID"]').next().find("input").val();
+            //军械批次
+            $.ajax({
+                url: '/Army/GetCountByReport',
+                dataType: 'json',
+                data:{Army_Name:army_Name,WarehouseName:WarehouseName,Batch:data.value},
+                type: 'Post',
+                success: function (data) {
+                    $("#KJ_Num").val(data);
+                }
+            })
+        })
+        //监听提交
+        form.on('submit(Ord-Scrap-Add-search)', function (data) {
+            var field = data.field;
+            var Scrap_ArmyIDBool=true;
+            var Scrap_WarehouseIDBool=true;
+            var Scrap_BatchIDBool=true;
+            if($("#Scrap_ArmyID").val().length<=0)
+            {
+                Scrap_ArmyIDBool=false;
+                layer.msg('请选择军械名称！', { icon: 7 });
+            }
+            if($("#Scrap_WarehouseID").val().length<=0)
+            {
+                Scrap_WarehouseIDBool=false;
+                layer.msg('请选择仓库！', { icon: 7 });
+            }
+            
+            if($("#Scrap_Batch").val().length<=0)
+            {
+                Scrap_BatchIDBool=false;
+                layer.msg('请选择批次！', { icon: 7 });
+            }       
+            if(Scrap_ArmyIDBool==true&&Scrap_WarehouseIDBool==true&&Scrap_WarehouseIDBool==true&&Scrap_BatchIDBool==true)
+            {
+                if(@ViewBag.Type==1)
+                {
+                    $.ajax({
+                        cache: false,
+                        type: "Post",
+                        async: false,
+                        url: '/Scrap/AddScrap', //模拟接口
+                        data: {
+                            Scrap_ArmyID: field.Scrap_ArmyID,
+                            Scrap_WarehouseID: field.Scrap_WarehouseID,
+                            Scrap_Batch:field.Scrap_Batch,
+                            Scrap_Num: field.Scrap_Num,
+                            Scrap_TransportName:field.Scrap_TransportName ,
+                            Scrap_TransportPhone:field.Scrap_TransportPhone         
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == true) {
+                                parent.layer.msg("新增成功！", { icon: 1 });
+
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                               
+
+                                
+
+                            } else {
+                                parent.layer.msg("新增失败！", { icon: 2 });
+                            }
+                        }
+                    })
+                }
+                
+            }
+        })
+        
+    })
+
+    </script>

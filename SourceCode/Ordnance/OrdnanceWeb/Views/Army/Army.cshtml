@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "军械类别管理";
+}
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">军械名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Army_Name" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>            
+                <div class="layui-inline">
+                        <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Army-search" id="Ord-Army-search">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+            </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                @if (ViewBag.RoleID == "0" || ViewBag.RoleID == "1")
+                {
+                    <button class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+                }
+            </div>
+            <table id="Ord_Army_Table" lay-filter="Ord_Army_Table"></table>
+            <script type="text/html" id="table-Army-admin">
+                @if (ViewBag.RoleID == "0" || ViewBag.RoleID == "1")
+                {
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script src="../../Customiz/scripts/jquery-3.4.1.min.js"></script>
+<script>
+   
+    layui.use(['table'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        
+        //用户管理
+        table.render({
+            elem: '#Ord_Army_Table',
+            url: '/Army/GetArmyData', 
+            cols: [
+				[{
+					type: 'checkbox',
+					fixed: 'left'
+				}, {
+						field: 'Army_Name',
+						title: '军械名称',
+						align: 'center'
+					},
+					{
+						field: 'Army_RepairCycle',
+						title: '维护周期（月）',
+						align: 'center'
+					}, {
+						field: 'Army_CreateTime',
+						title: '创建时间',
+						align: 'center'
+					}, {
+						title: '操作',
+						width: 150,
+						align: 'center',
+						fixed: 'right',
+						toolbar: '#table-Army-admin'
+					}
+				]
+            ],
+            page: true, //显示分页
+            even: true,  //隔行换颜色
+            text: '对不起，加载出现异常！'
+        });
+
+
+        //监听工具条
+        table.on('tool(Ord_Army_Table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                var count = 0;
+                //验证军械是否有入库数据 如果有不允许删除
+                $.ajax({
+                    url: '/Army/GetReportCount',
+                    dataType: 'json',
+                    async: false,
+                    type: 'Post',
+                    data: { Army_ID: data.Army_ID },
+                    success: function (data) {
+                        count = data;
+                    }
+                })
+                if (count > 0) {
+                    layer.msg('该军械存在入库数据，不允许删除！', { icon: 7 });
+                } else {
+                    layer.confirm('确定删除吗？', function (index) {
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/DeleteArmy', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                DelID: data.Army_ID
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('删除成功！', { icon: 1 });
+                                    table.reload('Ord_Army_Table');
+                                } else {
+                                    layer.msg('删除失败！', { icon: 2 });
+                                }
+
+                            }
+                        });
+                       
+                    });
+                }
+            } else if (obj.event === 'edit') {
+                var tr = $(obj.tr);
+
+                layer.open({  //打开新的弹窗 
+                    type: 2,  //弹窗类型
+                    title: '编辑军械',
+                    content: '/Army/ArmyAddEdit?type=2&ID='+data.Army_ID,
+                    area: ['420px', '250px'],                  
+                })
+            }
+        });
+
+
+        //监听搜索
+        form.on('submit(Ord-Army-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Army_Table', {
+                where: field
+            });
+        });
+
+        //事件
+        var active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: '军械新增',
+                    content: '/Army/ArmyAddEdit?type=1',
+                    area: ['420px', '250px']           
+                });
+            }
+        }
+        //监测点击，根据值确认执行哪个操作
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+
+
+
+

@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Scrap";
+}
+
+
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">军械名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Scrap_ArmyName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属仓库</label>
+                    <div class="layui-input-block">
+                        <select name="Scrap_WarehouseID" id="Scrap_WarehouseID">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="Scrap_Time" name="Scrap_Time" placeholder=" - ">
+                    </div>
+                </div>
+              
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Scrap-back-search" id="Ord-Scrap-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button id="add" class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+            </div>
+
+            <table id="Ord_Scrap_Table" lay-filter="Ord_Scrap_Table"></table>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var $ = layui.$;
+		var form = layui.form;
+		var userid = '';
+        //日期范围
+        laydate.render({
+            elem: '#Scrap_Time'
+          , range: "~"
+		});
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "5")
+        {
+            //禁止按钮
+            $('#add').addClass('layui-btn-disabled').attr('disabled', "true");
+		}
+		if (@ViewBag.RoleID == "5") {
+			userid = "@ViewBag.UserID";
+		}
+        //所属仓库
+        $.ajax({
+            url: '/Index/GetWarehouseData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Scrap_WarehouseID').append(new Option(item.Warehouse_Name, item.Warehouse_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+        //用户管理
+        table.render({
+            elem: '#Ord_Scrap_Table',
+			url: '/Scrap/GetScrapData?UserID= ' + userid,
+            page:true,
+            cols: [
+                [{
+                    type: 'checkbox',
+                    fixed: 'left'
+                },  {
+                    field: 'Scrap_ArmyName',
+                    title: '武器名称'
+                },  {
+                    field: 'Scrap_WarehouseName',
+                    title: '仓库名称'
+                },
+                {
+                    field: 'Scrap_Batch',
+                    title: '报废批次'
+                }, {
+                    field: 'Scrap_Num',
+                    title: '报废数量'
+                }, {
+                    field: 'Scrap_Time',
+                    title: '报废时间'
+                }
+                ]
+            ],
+            text: '对不起，加载出现异常！'
+        });
+
+        //监听搜索
+        form.on('submit(Ord-Scrap-back-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Scrap_Table', {
+                where: field
+            });
+        });
+        //事件
+        var active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: '报废记录',
+                    content: '/Scrap/ScrapAddEdit?type=1&ID=""',
+                    area: ['450px', '450px']
+
+                });
+            }
+        }
+        //监测点击，根据值确认执行哪个操作
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+

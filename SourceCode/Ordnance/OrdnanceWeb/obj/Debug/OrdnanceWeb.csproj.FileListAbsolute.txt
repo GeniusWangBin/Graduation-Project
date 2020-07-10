@@ -1,0 +1,264 @@
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\ApplicationInsights.config
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\csc.exe
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\System.Collections.Immutable.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\vbc.exe
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe.config
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll.config
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.pdb
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.Web.Infrastructure.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Razor.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Razor.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.xml
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Razor.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Deployment.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Razor.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Helpers.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Mvc.resources.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csprojResolveAssemblyReference.cache
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.dll
+c:\users\xd-admin\documents\visual studio 2015\Projects\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.pdb
+F:\Ordnance\OrdnanceWeb\bin\ApplicationInsights.config
+F:\Ordnance\OrdnanceWeb\bin\roslyn\csc.exe
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Ordnance\OrdnanceWeb\bin\roslyn\System.Collections.Immutable.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\System.Reflection.Metadata.dll
+F:\Ordnance\OrdnanceWeb\bin\roslyn\vbc.exe
+F:\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe
+F:\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe.config
+F:\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll.config
+F:\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll
+F:\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.pdb
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Agent.Intercept.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.Web.Infrastructure.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Razor.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.dll
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.dll
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.xml
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.xml
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.xml
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.xml
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.xml
+F:\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Razor.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.xml
+F:\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.xml
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Razor.resources.dll
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.resources.dll
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Deployment.resources.dll
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Razor.resources.dll
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Helpers.resources.dll
+F:\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Mvc.resources.dll
+F:\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.dll
+F:\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.pdb
+F:\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\ApplicationInsights.config
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\csc.exe
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\vbc.exe
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll.config
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.pdb
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Razor.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Razor.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.xml
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Razor.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Deployment.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Razor.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Helpers.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Mvc.resources.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.dll
+C:\Users\Administrator\Desktop\Ordnance\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.pdb
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\ApplicationInsights.config
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\csc.exe
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\vbc.exe
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll.config
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.pdb
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Razor.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Razor.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.xml
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Razor.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Deployment.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Razor.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Helpers.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Mvc.resources.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csprojAssemblyReference.cache
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csproj.CoreCompileInputs.cache
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csproj.CopyComplete
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.dll
+C:\Users\GeniusB\Desktop\打包项目\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.pdb
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\ApplicationInsights.config
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\csc.exe
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\vbc.exe
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll.config
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\OrdnanceWeb.pdb
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Razor.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.Web.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.ApplicationInsights.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Razor.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Deployment.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Webpages.Razor.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Helpers.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\System.Web.Mvc.xml
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Razor.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Deployment.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Webpages.Razor.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Helpers.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\bin\zh-Hans\System.Web.Mvc.resources.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csprojAssemblyReference.cache
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csproj.CoreCompileInputs.cache
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.csproj.CopyComplete
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.dll
+C:\Users\GeniusB\Desktop\Ordnance\OrdnanceWeb\obj\Debug\OrdnanceWeb.pdb

@@ -1,0 +1,114 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+
+}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>login</title>
+	<link rel="stylesheet" type="text/css" href="~/Login/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="~/Login/css/demo.css" />
+	<link rel="stylesheet" href="~/Login/js/vendor/jgrowl/css/jquery.jgrowl.min.css">
+	<!--必要样式-->
+	<link rel="stylesheet" type="text/css" href="~/Login/css/component.css" />
+	<!--[if IE]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+	<style>
+		input::-webkit-input-placeholder {
+			color: rgba(0, 0, 0, 0.726);
+		}
+
+		input::-moz-placeholder { /* Mozilla Firefox 19+ */
+			color: rgba(0, 0, 0, 0.726);
+		}
+
+		input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			color: rgba(0, 0, 0, 0.726);
+		}
+
+		input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+			color: rgba(0, 0, 0, 0.726);
+		}
+	</style>
+</head>
+<body>
+	<div class="container demo-1">
+		<div class="content">
+			<div id="large-header" class="large-header">
+				<canvas id="demo-canvas"></canvas>
+				<div class="logo_box">
+					<h3 style="color:cadetblue">军 械 系 统</h3>
+					<form action="#" name="f" method="post">
+						<div class="input_outer">
+							<span class="u_user"></span>
+							<input id="ID" name="logname" class="text" style="color: #000000 !important" type="text" placeholder="请输入账户">
+						</div>
+						<div class="input_outer">
+							<span class="us_uer"></span>
+							<input id="PASSWORD" name="logpass" class="text" style="color: #000000 !important; position:absolute; z-index:100;" value="" type="password" placeholder="请输入密码">
+						</div>
+						<div id="LOGIN" class="mb2"><a class="act-but submit" href="javascript:;" onclick="login()" style="color: #FFFFFF">登录</a></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div><!-- /container -->
+	<script src="~/Login/js/TweenLite.min.js"></script>
+	<script src="~/Login/js/EasePack.min.js"></script>
+	<script src="~/Login/js/jquery.js"></script>
+	<script src="~/Login/js/rAF.js"></script>
+	<script src="~/Login/js/demo-1.js"></script>
+	<script src="~/Login/js/vendor/jgrowl/jquery.jgrowl.min.js"></script>
+	<script>
+		function login() {
+			var username = document.getElementById("ID").value;
+			var password = document.getElementById("PASSWORD").value;
+			if (username == "") {
+				$.jGrowl("用户名不能为空！", { header: '提醒' });
+			} else if (password == "") {
+				$.jGrowl("密码不能为空！", { header: '提醒' });
+			} else {
+				AjaxFunc();
+			}
+		}
+		function AjaxFunc() {
+			var username = document.getElementById("ID").value;
+			var password = document.getElementById("PASSWORD").value;
+			$.ajax({
+				type: 'Post',
+				url: "/Index/GetLoginLoggerData",
+				dataType: "json",
+				data: { "username": username, "password": password },
+				success: function (data) {
+					if (data.num == false){
+						$.jGrowl("用户名或密码错误！", { header: '提醒' });
+					}
+					else if (data.User_Status == 0) {
+						$.jGrowl("用户已被停用", { header:'提醒' })
+					}
+					else {
+						$.jGrowl("登陆成功!")
+						console.log(data);
+						//console.log(jqXHR.getResponseHeader("Set-Cookie"));
+						//$.cookie("Gsessionid",jqXHR.getResponseHeader("Set-Cookie"));
+						location.href = "/Home/Home?name=" + data.User_Name + "&userid=" + data.User_Id + "&roleid=" + data.Role_Id + "";     //+ account;
+                        console.log(document.cookie);
+					}
+				},
+				error: function (xhr, type) {
+					console.log(xhr);
+				}
+			});
+		}
+	</script>
+	<div style="text-align:center;">
+	</div>
+</body>
+</html>
+

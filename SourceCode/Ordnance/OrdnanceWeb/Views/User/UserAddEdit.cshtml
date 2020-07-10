@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "UserAddEdit";
+
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="User_Name" id="User_Name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="User_PassWord" id="User_PassWord" lay-verify="required|num" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属角色</label>
+            <div class="layui-input-block">
+                <select name="User_RoleID" id="User_RoleID">
+                </select>
+            </div>           
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分组选择框</label>
+            <div class="layui-input-inline">
+                <select  name="User_Status" id="User_Status">
+                    <option value="1">启用</option>
+                    <option value="0">停用</option>
+                </select>
+            </div>
+        </div>
+
+       <div>
+            <button class="layui-btn layui-btn-primary layui-btn-sm"  id="Ord_Quxiao" style="float:right">取消</button>
+           <button class="layui-btn layui-btn-normal layui-btn-sm" lay-submit lay-filter="Ord-User-Add-search" style="float:right;margin-right:20px">确定</button>
+        </div>
+
+    </div>
+</form>
+<script src="../../Customiz/layui/layui.js"></script>  
+<script src="../../Customiz/scripts/jquery-3.4.1.min.js"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var layer=layui.layer;
+        //角色
+        $.ajax({
+            url: '/User/GetRoleData',
+            dataType: 'json',
+            type: 'Post',
+            async: false,
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#User_RoleID').append(new Option(item.Role_Name, item.Role_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+
+        //根据名称获取是否用户名称重复
+        function selectcount(value) {
+            var count = 0;
+            $.ajax({
+                url: '/User/GetUserCount',
+                dataType: 'json',
+                type: 'Post',
+                async: false,
+                data: { User_Name: value },
+                success: function (data) {
+                    count= data;
+                }
+            })
+            return count;
+        }
+        //重新渲染 固定写法
+        if(@ViewBag.Type==2)
+        {
+            $("#User_Name").val('@ViewBag.User_Name');
+            $("#User_PassWord").val('@ViewBag.User_PassWord');
+            var select = 'dd[lay-value=' + @ViewBag.User_RoleID + ']';
+            $('#User_RoleID').siblings("div.layui-form-select").find('dl').find(select).click();
+
+            var select2 = 'dd[lay-value=' + @ViewBag.User_Status + ']';
+            $('#User_Status').siblings("div.layui-form-select").find('dl').find(select).click();
+        }
+        else
+        {
+            var select = 'dd[lay-value=' + 2 + ']';
+            $('#User_RoleID').siblings("div.layui-form-select").find('dl').find(select).click();
+        }
+        //表单验证
+        form.verify({
+            num: function (value) {
+                if (!/^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[\(\)])+$)([^(0-9a-zA-Z)]|[\(\)]|[a-zA-Z]|[0-9]){6,6}$/.test(value)) {
+                    return '请输入六位数密码（数字与密码组合）！';
+                }
+
+            },
+            PDnume: function (value) {
+                var count=selectcount(value);
+                if (count>0) {
+                    return '账号重复！';
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(Ord-User-Add-search)', function (data) {
+            var field = data.field;
+            //提交 Ajax 成功后，静态更新表格中的数据
+            if(@ViewBag.Type==1)
+            {
+                if (selectcount(field.User_Name) > 0)
+                {
+                    layer.msg('用户名存在重复！', { icon: 7 });
+                    return false;
+                }
+                else
+                {
+                    $.ajax({
+                        cache: false,
+                        type: "Post",
+                        async: false,
+                        url: '/User/AddUser', //模拟接口
+                        data: {
+                            User_Name : field.User_Name,
+                            User_PassWord :field.User_PassWord,
+                            Role_ID: field.User_RoleID,
+                            User_Status: field.User_Status
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data == true) {
+                                parent.layer.msg("新增成功！", { icon: 1 });
+
+                                //window.parent.$(".layui-laypage-btn").click();//刷新父窗体列表
+                                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+
+
+
+
+                            } else {
+                                parent.layer.msg("新增失败！", { icon: 2 });
+
+                            }
+
+                        }
+                    });
+                }
+            }
+            else
+            {
+                $.ajax({
+                    cache: false,
+                    type: "Post",
+                    async: false,
+                    url: '/User/UpdateUser', //模拟接口
+                    data: {
+                        User_ID:"@ViewBag.User_ID",
+                        User_Name : field.User_Name,
+                        User_PassWord :field.User_PassWord,
+                        Role_ID: field.User_RoleID,
+                        User_Status: field.User_Status
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == true) {
+                            parent.layer.msg("修改成功！", { icon: 1 });
+
+                            //window.parent.$(".layui-laypage-btn").click();//刷新父窗体列表
+
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+
+
+
+                        } else {
+                            parent.layer.msg("修改失败！", { icon: 2 });
+                        }
+                    }
+                })
+            }
+
+
+
+        });
+    })
+
+    </script>

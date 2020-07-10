@@ -1,0 +1,539 @@
+﻿
+
+@{
+    ViewBag.Title = "借用";
+}
+
+
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">军械名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Borrow_ArmyName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">申请人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Borrow_UserName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属仓库</label>
+                    <div class="layui-input-block">
+                        <select name="Borrow_WarehouseID" id="Borrow_WarehouseID">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="Borrow_CreatTime" name="Borrow_CreatTime" placeholder="~">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-inline">
+                        <select name="Borrow_Status">
+                            <option value="">全部</option>
+                            <option value="0">已提交</option>
+                            <option value="1">已确认</option>
+                            <option value="2">已回拒</option>
+                            <option value="3">已借出</option>
+                            <option value="4">已归还</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Borrow-back-search" id="Ord-Borrow-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+
+                <button  id="add" class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+                <button  id="Return" class="layui-btn layuiadmin-btn-admin layui-btn-primary" data-type="Return" style="float:right">归还</button>
+                <button  id="Save" class="layui-btn layuiadmin-btn-admin layui-btn-warm" data-type="Save" style="float:right">借出</button>
+                <button  id="Rrfuse" class="layui-btn layuiadmin-btn-admin  layui-btn-normal" data-type="Rrfuse" style="float:right">回拒</button>
+                <button  id="confirm" class="layui-btn layuiadmin-btn-admin" data-type="confirm" style="float:right">确认</button>
+                
+            </div>
+
+            <table id="Ord_Borrow_Table" lay-filter="Ord_Borrow_Table"></table>
+            <script type="text/html" id="table-Borrow-admin">
+                @if (ViewBag.RoleID == "0" || ViewBag.RoleID == "2")
+                {
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var $ = layui.$;
+		var form = layui.form;
+		var userid = '';
+        //日期范围
+        laydate.render({
+            elem: '#Borrow_CreatTime'
+          , range: "~"
+        });
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "2")
+        {
+            //禁止按钮
+            $('#add').addClass('layui-btn-disabled').attr('disabled', "true");
+        }
+
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "5")
+        {
+            //禁止按钮
+            $('#Save').addClass('layui-btn-disabled').attr('disabled', "true");
+            $('#Rrfuse').addClass('layui-btn-disabled').attr('disabled', "true");
+            $('#confirm').addClass('layui-btn-disabled').attr('disabled', "true");
+            $('#Return').addClass('layui-btn-disabled').attr('disabled', "true");
+            
+		}
+		if (@ViewBag.RoleID == "5")
+		{
+			userid = "@ViewBag.UserID";
+		}
+        //所属仓库
+        $.ajax({
+            url: '/Index/GetWarehouseData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Borrow_WarehouseID').append(new Option(item.Warehouse_Name, item.Warehouse_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+
+       
+        table.render({
+			elem: '#Ord_Borrow_Table',
+			url: '/Army/GetBorrowData?UserID='+ userid , //模拟接口
+            page:true ,
+            cols: [
+                [{
+                    type: 'checkbox',
+                    fixed: 'left'
+                }, {
+                    field: 'Borrow_ArmyName',
+                    title: '武器名称'
+
+                }, {
+                    field: 'Borrow_WarehouseName',
+                    title: '所在仓库'
+                }, {
+                    field: 'Borrow_Batch',
+                    title: '军械批次'
+                }, {
+                    field: 'Borrow_UserName',
+                    title: '申请人'
+                }, {
+                    field: 'Borrow_Num',
+                    title: '申请数量'
+                }, {
+                    field: 'Borrow_Time',
+                    title: '申请时间'
+                },  {
+                    field: 'Borrow_ReturnTime',
+                    title: '归还时间'
+                }, 
+                 {
+                     field: 'Borrow_Status',
+                     title: '状态',
+                     templet: function (data) {
+                         if (data.Borrow_Status == 0) { return "已提交"; }
+                         if (data.Borrow_Status == 1) { return "已确认"; }
+                         if (data.Borrow_Status == 2) { return "已回拒"; }
+                         if (data.Borrow_Status == 3) { return "已借出"; }
+                         if (data.Borrow_Status == 4) { return "已归还"; }
+
+                     }
+                 }, {
+                     title: '操作',
+                     width: 150,
+                     align: 'center',
+                     fixed: 'right',
+                     toolbar: '#table-Borrow-admin'
+                 }
+                ]
+            ],
+            text: '对不起，加载出现异常！'
+        });
+
+
+        //监听搜索
+        form.on('submit(Ord-Borrow-back-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Borrow_Table', {
+                where: field
+            });
+        });
+
+        //监听工具条
+        table.on('tool(Ord_Borrow_Table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                if (data.Borrow_Status != 0 && data.Borrow_Status != 2) {
+                    layer.msg('只允许删除已提交以及已回拒状态的数据！', { icon: 7 });
+                }
+                else {
+                    layer.confirm('确定删除吗？', function (index) {
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/DeleteBorrow', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: data.Borrow_ID
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('删除成功！', { icon: 1 });
+                                    table.reload('Ord_Borrow_Table');
+                                } else {
+                                    layer.msg('删除失败！', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+
+            }   
+            
+        });
+        //事件
+        var active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: '采购入库',
+                    content: '/Army/BorrowAddEdit?type=1&ID=""',
+                    area: ['450px', '550px']
+
+                });
+            },
+            confirm: function () {
+                var checkStatus = table.checkStatus('Ord_Borrow_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                var STCOBool = true;
+                if (checkData.length != 1) {
+                    layer.msg('请选择一条数据!', { icon: 7 });
+                    return false;
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Borrow_Status != 0) {
+                        PdBool = false;
+                      
+                    }
+                });
+                if (!PdBool)
+                {
+                       layer.msg('只允许确认已提交状态的数据!', { icon: 7 });
+                        return false;
+                }
+                //循环取数
+                var deleteS = "";
+                var num = 0;
+                var armyid = "";
+                var WarehouseID = "";
+                var Batch = "";
+                $.each(checkData, function (i, item) {
+                    deleteS = item.Borrow_ID;
+                    num = item.Borrow_Num;
+                    armyid = item.Borrow_ArmyID;
+                    WarehouseID = item.Borrow_WarehouseID;
+                    Batch = item.Borrow_Batch;
+                });
+                //所属仓库
+                $.ajax({
+                    url: '/Army/GetBorrowByReport',
+                    dataType: 'json',
+                    type: 'Post',
+                    data:{
+                        armyid: armyid,
+                        WarehouseID: WarehouseID,
+                        Batch: Batch
+                    },
+                    success: function (data) {
+                        if (data.status == 0)
+                        {
+                            STCOBool = false;
+                            layer.msg('当前军械批次正在维护，禁止借出！!', { icon: 7 });
+                        }
+                        if (data.count < num) {
+                            STCOBool = false;
+                            layer.msg('可借数量不足!', { icon: 7 });
+                        }
+                    }
+                })
+
+                if (PdBool && STCOBool) {
+                    layer.confirm('确认提交吗？', function (index) {
+                        
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateBorrow', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 1,
+                                Borrow_Num: num,
+                                armyid: armyid,
+                                WarehouseID: WarehouseID,
+                                Batch: Batch
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已确认', { icon: 1 });
+                                    table.reload('Ord_Borrow_Table');
+                                } else {
+                                    layer.msg('确认失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            },
+
+            Rrfuse: function () {
+                var checkStatus = table.checkStatus('Ord_Borrow_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                    return false;
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Borrow_Status != 0) {
+                        PdBool = false;
+                       
+                    }
+                });
+                if (!PdBool) {
+                    layer.msg('只允许回拒已提交状态的数据!', { icon: 7 });
+                    return false;
+                }
+                //循环取数
+                var deleteS = "";
+                var num = 0;
+                var armyid = "";
+                var WarehouseID = "";
+                var Batch = "";
+                $.each(checkData, function (i, item) {
+                    deleteS = item.Borrow_ID;
+                    num = item.Borrow_Num;
+                    armyid = item.Borrow_ArmyID;
+                    WarehouseID = item.Borrow_WarehouseID;
+                    Batch = item.Borrow_Batch;
+                });
+               
+                if (PdBool) {
+                    layer.confirm('确认回拒吗？', function (index) {
+
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateBorrow', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 2,
+                                Borrow_Num: num,
+                                armyid: armyid,
+                                WarehouseID: WarehouseID,
+                                Batch: Batch
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已回拒', { icon: 1 });
+                                    table.reload('Ord_Borrow_Table');
+                                } else {
+                                    layer.msg('回拒失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            },
+
+            Save: function () {
+                var checkStatus = table.checkStatus('Ord_Borrow_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                    return false;
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Borrow_Status != 1) {
+                        PdBool = false;
+                       
+                    }
+                });
+
+                if (!PdBool) {
+                    layer.msg('只允许出库已确认状态的数据!', { icon: 7 });
+                    return false;
+                }
+                //循环取数
+                var deleteS = "";
+                var num = 0;
+                var armyid = "";
+                var WarehouseID = "";
+                var Batch = "";
+                $.each(checkData, function (i, item) {
+                    deleteS = item.Borrow_ID;
+                    num = item.Borrow_Num;
+                    armyid = item.Borrow_ArmyID;
+                    WarehouseID = item.Borrow_WarehouseID;
+                    Batch = item.Borrow_Batch;
+                });
+               
+
+                if (PdBool) {
+                    layer.confirm('确认出库吗？', function (index) {
+
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateBorrow', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 3,
+                                Borrow_Num: num,
+                                armyid: armyid,
+                                WarehouseID: WarehouseID,
+                                Batch: Batch
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已出库', { icon: 1 });
+                                    table.reload('Ord_Borrow_Table');
+                                } else {
+                                    layer.msg('出库失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            },
+
+            Return: function () {
+                var checkStatus = table.checkStatus('Ord_Borrow_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                    return false;
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Borrow_Status != 3) {
+                        PdBool = false;
+                    }
+                });
+                if (!PdBool) {
+                    layer.msg('只允许归还已借出状态的数据!', { icon: 7 });
+                    return false;
+                }
+                //循环取数
+                var deleteS = "";
+                var num = 0;
+                var armyid = "";
+                var WarehouseID = "";
+                var Batch = "";
+                $.each(checkData, function (i, item) {
+                    deleteS = item.Borrow_ID;
+                    num = item.Borrow_Num;
+                    armyid = item.Borrow_ArmyID;
+                    WarehouseID = item.Borrow_WarehouseID;
+                    Batch = item.Borrow_Batch;
+                });
+                
+
+                if (PdBool) {
+                    layer.confirm('确认提交吗？', function (index) {
+
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateBorrow', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 4,
+                                Borrow_Num: num,
+                                armyid: armyid,
+                                WarehouseID: WarehouseID,
+                                Batch: Batch
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已归还', { icon: 1 });
+                                    table.reload('Ord_Borrow_Table');
+                                } else {
+                                    layer.msg('归还失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            },
+            
+           
+            
+        }
+        //监测点击，根据值确认执行哪个操作
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+      
+
+    });
+</script>
+
+
+
+
+
+

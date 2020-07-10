@@ -1,0 +1,583 @@
+﻿
+@{
+    ViewBag.Title = "Home";  // 从界面网模板传值
+}
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Customiz/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Customiz/css/admin.css" rel="stylesheet" />
+</head>
+<body class="layui-layout-body">
+
+    <div id="LAY_app">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<!-- 头部区域 -->
+				<ul class="layui-nav layui-layout-left">
+					<li class="layui-nav-item layadmin-flexible" lay-unselect>
+						<a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+							<i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+						</a>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" layadmin-event="refresh" title="刷新">
+							<i class="layui-icon layui-icon-refresh-3"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" style="margin-right: 50px;">
+
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;">
+							<cite><span id="UserName"> @ViewBag.UserName</span></cite>
+							<span id="UserID" style="display:none"> @ViewBag.UserID</span>
+							<span id="RoleID" style="display:none"> @ViewBag.RoleID</span>
+						</a>
+						<dl class="layui-nav-child">
+							@*<dd><a lay-href="set/user/password.html">修改密码</a></dd>
+						<hr>*@
+							<dd layadmin-event="logout" onclick="logout()" style="text-align: center;"><a>退出</a></dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+
+			<!-- 侧边菜单 -->
+			<div class="layui-side layui-side-menu">
+				<div class="layui-side-scroll">
+					<div class="layui-logo" lay-href="home/Home.html">
+						<span>军械管理系统</span>
+					</div>
+					<ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+						<li data-name="user" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="军械管理" lay-direction="2">
+								<i class="layui-icon layui-icon-util"></i>
+								<cite>军械管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Army/Army?roleid=@ViewBag.RoleID">军械信息</a>
+								</dd>
+								<dd>
+									<a lay-href="/Army/ReportMainCal">军械数据</a>
+								</dd>
+							</dl>
+						</li>
+						<li data-name="Report" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="入库管理" lay-direction="2">
+								<i class="layui-icon layui-icon-form"></i>
+								<cite>入库管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Army/Report?roleid=@ViewBag.RoleID&Userid=@ViewBag.UserID">入库信息</a>
+								</dd>
+
+							</dl>
+						</li>
+
+						<li data-name="Borrow" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="出借管理" lay-direction="2">
+								<i class="layui-icon layui-icon-cart"></i>
+								<cite>借用管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Army/Borrow?roleid=@ViewBag.RoleID&Userid=@ViewBag.UserID">借用信息</a>
+								</dd>
+							</dl>
+						</li>
+						<li data-name="Main" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="维护管理" lay-direction="2">
+								<i class="layui-icon layui-icon-cart"></i>
+								<cite>维护管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+
+								<dd>
+									<a lay-href="/Maintain/GetNeedMaintain?roleid=@ViewBag.RoleID&Userid=@ViewBag.UserID">维护信息</a>
+								</dd>
+								<dd>
+									<a lay-href="/Maintain/GetMaintainRecord?roleid=@ViewBag.RoleID">维护记录</a>
+								</dd>
+							</dl>
+						</li>
+						<li data-name="Scarp" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="报废管理" lay-direction="2">
+								<i class="layui-icon layui-icon-delete"></i>
+								<cite>报废管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Scrap/Scrap?roleid=@ViewBag.RoleID">报废信息</a>
+								</dd>
+							</dl>
+						</li>
+						<li data-name="Record" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="巡查管理" lay-direction="2">
+								<i class="layui-icon layui-icon-template-1"></i>
+								<cite>巡查管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Record/Record?roleid=@ViewBag.RoleID">巡查记录</a>
+								</dd>
+							</dl>
+						</li>
+						<li data-name="Jichu" class="layui-nav-item">
+							<a href="javascript:;" lay-tips="用户管理" lay-direction="2">
+								<i class="layui-icon layui-icon-set-sm"></i>
+								<cite>基础管理</cite>
+							</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a lay-href="/Role/Role?roleid=@ViewBag.RoleID">角色管理</a>
+								</dd>
+
+								<dd>
+									<a lay-href="/User/User?roleid=@ViewBag.RoleID">账号管理</a>
+								</dd>
+								<dd>
+									<a lay-href="/Record/Warehouse?roleid=@ViewBag.RoleID">仓库管理</a>
+								</dd>
+							</dl>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+
+			<!-- 页面标签 -->
+			<div class="layadmin-pagetabs" id="LAY_app_tabs">
+				<div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+				<div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+				<div class="layui-icon layadmin-tabs-control layui-icon-down">
+					<ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+						<li class="layui-nav-item" lay-unselect>
+							<a href="javascript:;"></a>
+							<dl class="layui-nav-child layui-anim-fadein">
+								<dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+								<dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+								<dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+				<div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+					<ul class="layui-tab-title" id="LAY_app_tabsheader">
+						<li lay-id="home/Home.html" lay-attr="home/Home.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+					</ul>
+				</div>
+			</div>
+
+            
+			<!-- 主体内容 -->
+			<div class="layui-body" id="LAY_app_body" >
+				<div class="layadmin-tabsbody-item layui-show">
+					<!--<iframe src="home/Home.html" frameborder="0" class="layadmin-iframe"></iframe>-->
+					<div class="layui-fluid">
+						<div class="layui-row layui-col-space15" >
+
+							<div class="layui-col-sm6 layui-col-md3">
+								<div class="layui-card">
+									<div class="layui-card-header">
+										军械入库数
+										<span class="layui-badge layui-bg-blue layuiadmin-badge">本月</span>
+									</div>
+									<div class="layui-card-body layuiadmin-card-list">
+										<p class="layuiadmin-big-font" id="RuKu">45555</p>
+										<p>
+											<a src="Index/Index">总计军械数</a>
+											<span class="layuiadmin-span-color"><span id="ZRuKu">8千</span> <i class="layui-inline layui-icon layui-icon-star"></i></span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md3">
+								<div class="layui-card">
+									<div class="layui-card-header">
+										军械出借数
+										<span class="layui-badge layui-bg-cyan layuiadmin-badge">本月</span>
+									</div>
+									<div class="layui-card-body layuiadmin-card-list">
+										<p class="layuiadmin-big-font" id="ChuKu">33,555</p>
+										<p>
+											总计借出数
+											<span class="layuiadmin-span-color"><span id="ZChuKu">100万</span> <i class="layui-inline layui-icon layui-icon-star-fill"></i></span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md3">
+								<div class="layui-card">
+									<div class="layui-card-header">
+										军械报废数
+										<span class="layui-badge layui-bg-green layuiadmin-badge">本月</span>
+									</div>
+									<div class="layui-card-body layuiadmin-card-list">
+
+										<p class="layuiadmin-big-font" id="BaoFei">999,666</p>
+										<p>
+											总报废数
+											<span class="layuiadmin-span-color"><span id="ZBaoFei">100万</span> <i class="layui-inline layui-icon layui-icon-util"></i></span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-sm6 layui-col-md3">
+								<div class="layui-card">
+									<div class="layui-card-header">
+										正常用户
+										<span class="layui-badge layui-bg-orange layuiadmin-badge">本月</span>
+									</div>
+									<div class="layui-card-body layuiadmin-card-list">
+
+										<p class="layuiadmin-big-font" id="User">66,666</p>
+										<p>
+											总用户
+											<span class="layuiadmin-span-color"><span id="ZUser">15%</span> <i class="layui-inline layui-icon layui-icon-user"></i></span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="layui-col-sm12">
+								<div class="layui-card">
+									<div class="layui-card-header">
+										军械统计
+										<div class="layui-btn-group layuiadmin-btn-group" style=" margin-right:24%">
+											<div class="layui-card-header">年度借用排行</div>
+										</div>
+									</div>
+									<div class="layui-card-body">
+										<div class="layui-row">
+											<div class="layui-col-sm8">
+												<div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-pagetwo">
+													<div id="main" style="width:100%;height:100%"></div>
+												</div>
+											</div>
+											<div class="layui-col-sm4">
+												<div class="layui-card">
+													<div class="layui-card-body">
+														<div class="layui-tab-content">
+															<div class="layui-tab-item layui-show">
+																<table id="LAY-index-jieyongPH"></table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-col-sm4">
+								<div class="layui-card">
+									<div class="layui-card-header">军械借用记录</div>
+									<div class="layui-card-body">
+										<div class="layui-tab-content">
+											<div class="layui-tab-item layui-show">
+												<table id="LAY-index-jieyong"></table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-col-sm4">
+								<div class="layui-card">
+									<div class="layui-card-header">军械入库记录</div>
+									<div class="layui-card-body">
+										<div class="layui-tab-content">
+											<div class="layui-tab-item layui-show">
+												<table id="LAY-index-ruku"></table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="layui-col-sm4">
+								<div class="layui-card">
+									<div class="layui-card-header">军械报废记录</div>
+									<div class="layui-card-body">
+										<div class="layui-tab-content">
+											<div class="layui-tab-item layui-show">
+												<table id="LAY-index-baofei"></table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 辅助元素，一般用于移动设备下遮罩 -->
+			<div class="layadmin-body-shade" layadmin-event="shade"></div>
+		</div>
+    </div>
+    <script src="~/Customiz/layui/layui.js"></script>
+    <script src="~/Customiz/scripts/index.js"></script>
+    <script src="~/Customiz/scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Customiz/scripts/echarts.min.js"></script>
+
+    <script>
+        var dataList;
+        var seriesRuku;
+        var seriesJEku;
+        var seriesBF;
+        $.ajax({
+            cache: false,
+            type: "POST",
+            async: false,
+            url: '/Home/HomeChart', //模拟接口
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    dataList = data.data;
+                    seriesRuku = data.seriesRuku;
+                    seriesJEku = data.seriesJEku;
+                    seriesBF = data.seriesBF;
+                }
+            },
+            error: function () {
+                alert("cuole");
+            }
+        });
+        var options = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ["入库数量", "报废数量", "借用数量"]//图例
+            }
+			    ,
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: dataList
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: "入库数量",
+                    type: 'line',
+                    stack: '总量',
+                    data: seriesRuku,
+                    itemStyle: { normal: { label: { show: true } } }
+                },
+                {
+                    name: "借用数量",
+                    type: 'line',
+                    stack: '总量',
+                    data: seriesJEku,
+                    itemStyle: { normal: { label: { show: true } } }
+                },
+                {
+                    name: "报废数量",
+                    type: 'line',
+                    stack: '总量',
+                    data: seriesBF,
+                    itemStyle: { normal: { label: { show: true } } }
+                }
+            ]
+
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(options);
+
+
+
+
+    //图表
+
+    layui.use('table', function () {
+		var $ = layui.$;
+
+
+        $.ajax({
+            cache: false,
+            type: "Post",
+            async: false,
+            url: '/Index/GetAllData', //模拟接口
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    $('#RuKu').html(data.ruku);
+                    $('#ZRuKu').text(data.zruku);
+                    $('#ChuKu').text(data.chuku);
+                    $('#ZChuKu').text(data.zchuku);
+                    $('#BaoFei').text(data.baofei);
+                    $('#ZBaoFei').text(data.zbaofei);
+                    $('#User').text(data.user);
+                    $('#ZUser').text(data.zuser);
+                }
+            },
+            error: function () {
+                alert("cuole");
+            }
+        });
+
+    });
+
+    //图表
+
+    layui.use(['carousel'], function () {
+        var $ = layui.$,
+			carousel = layui.carousel;
+       
+
+
+    });
+
+    //排名
+    layui.use('table', function () {
+        var $ = layui.$,
+			table = layui.table;
+        table.render({
+            elem: '#LAY-index-jieyongPH',
+            url: '/Index/ShouyePaiming' //模拟接口
+				,
+            cols: [
+				[{
+					field: 'Borrow_ArmyName',
+				    title: '军械名称',
+				    style: "text-align:center"
+				}, {
+					field: 'Borrow_Num',
+				    title: '借用数量',
+				    style: "text-align:center"
+				}]
+            ],
+            skin: 'line'
+        });
+    });
+
+    //借用
+    var cangku = [];
+    layui.use('table', function () {
+        var $ = layui.$,
+			table = layui.table;
+        table.render({
+            elem: '#LAY-index-jieyong',
+			url: '/Index/ShouyeBorrow' //模拟接口
+				,
+            cols: [
+				[{
+					field: 'Borrow_ArmyName',
+				    title: '军械名称'
+				}, {
+					field: 'Borrow_WarehouseID',
+				    title: '借用仓库',
+				}, {
+					field: 'Borrow_Num',
+				    title: '借用数量'
+				}, {
+					field: 'Borrow_Time',
+					title:'借用时间',
+					}
+				]
+            ],
+            skin: 'line'
+        });
+    });
+
+
+    //入库
+    layui.use('table', function () {
+        var $ = layui.$,
+			table = layui.table;
+        table.render({
+            elem: '#LAY-index-ruku',
+            url: '/Index/ShouyeRuku' //模拟接口
+				,
+            cols: [
+				[{
+					field: 'Report_ArmyName',
+				    title: '军械名称'
+				}, {
+					field: 'Report_Num',
+					title: '入库数量',
+				},{
+					field: 'Report_WarehouseName',
+				    title: '入库仓库',
+				}, {
+					field: 'Report_CreatTime',
+				    title: '入库时间时间'
+				}]
+            ],
+            skin: 'line'
+        });
+    });
+
+
+    //报废
+    layui.use('table', function () {
+        var $ = layui.$,
+			table = layui.table;
+        table.render({
+            elem: '#LAY-index-baofei',
+            url: '/Index/ShouyeBaofei' //模拟接口
+				,
+            cols: [
+				[{
+					field: 'Scrap_ArmyName',
+				    title: '军械名称'
+				}, {
+					field: 'Scrap_WarehouseName',
+				    title: '所在仓库',
+				}, {
+					field: 'Scrap_Time',
+				    title: '借用时间'
+					}
+				]
+            ],
+            skin: 'line'
+        });
+    });
+
+		function logout() {
+			
+			//console.log(jqXHR.getResponseHeader("Set-Cookie"));
+			//$.cookie("Gsessionid",jqXHR.getResponseHeader("Set-Cookie"));
+			location.href = "/Index/Index";     //+ account;
+			//console.log(document.cookie);
+		}
+    </script>
+</body>
+</html>
+
+
+
+
+@*<script src="../../Customiz/layui/layui.js"></script>
+<script src="~/Customiz/layui/lay/modules/jquery.js"></script>
+<script src="../../Customiz/scripts/extend/echarts.js"></script>*@

@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "军械数据";
+}
+
+
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">军械名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Report_ArmyName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">所属仓库</label>
+                    <div class="layui-input-block">
+                        <select name="Warehouse" id="Warehouse">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="Report_CreatTime" name="Report_CreatTime" placeholder="~">
+                    </div>
+                </div>          
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Report-back-search" id="Ord-Report-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            
+
+            <table id="Ord_Report_Table" lay-filter="Ord_Report_Table"></table>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var $ = layui.$;
+        var form = layui.form;
+        //日期范围
+        laydate.render({
+            elem: '#Report_CreatTime'
+          , range: "~"
+        });
+
+
+        //所属仓库
+        $.ajax({
+            url: '/Index/GetWarehouseData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Warehouse').append(new Option(item.Warehouse_Name, item.Warehouse_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+
+        //用户管理
+        table.render({
+            elem: '#Ord_Report_Table',
+            url: '/Army/GetReportMainCalData', 
+            page: true,
+            where: { Borrow_Status:3},
+            cols: [
+                [{
+                    type: 'checkbox',
+                    fixed: 'left'
+                }, {
+                    field: 'Report_ArmyName',
+                    title: '军械名称'
+                }, {
+                    field: 'Report_Batch',
+                    title: '军械批次'
+                },{
+                    field: 'Report_WarehouseName',
+                    title: '仓库名称'
+                }, {
+                    field: 'Report_Num',
+                    title: '军械数量'
+                }, {
+                    field: 'Report_InventoryNum',
+                    title: '在库数量'
+                }, {
+                    field: 'Report_BorrowNum',
+                    title: '借出数量'
+                }, {
+                    field: 'Report_ScrapNum',
+                    title: '报废数量'
+                }, {
+                    field: 'Report_CreatTime',
+                    title: '日期'
+                }, {
+                    field: 'Report_MaintainStatus',
+                    title: '军械状态',
+                    templet: function (data) {
+                        if (data.Report_MaintainStatus  == 0) { return "维护中"; }
+                        if (data.Report_MaintainStatus  == 1) { return "正常"; }
+
+                    }
+                }
+                
+                ]
+            ],
+            text: '对不起，加载出现异常！'
+        });
+
+        //监听搜索
+        form.on('submit(Ord-Report-back-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Report_Table', {
+                where: field
+            });
+        });
+
+       
+
+    });
+</script>
+
+

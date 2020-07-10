@@ -1,0 +1,392 @@
+﻿
+@{
+    ViewBag.Title = "采购入库";
+}
+
+
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline" >
+                    <label class="layui-form-label">军械名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Report_ArmyName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="layui-form-label">申请人</label>
+                    <div class="layui-input-block" >
+                        <input type="text" name="Report_UserName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="layui-form-label">所属仓库</label>
+                    <div class="layui-input-block">
+                        <select name="Warehouse" id="Warehouse">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="Report_CreatTime" name="Report_CreatTime" placeholder="~">
+                    </div>
+                </div>
+                <div class="layui-inline" >
+					<label class="layui-form-label">军械状态</label>
+                    <div class="layui-input-inline">
+                        <select name="Report_Status">
+                            <option value="">全部</option>
+                            <option value="0">已提交</option>
+                            <option value="1">已确认</option>
+                            <option value="2">已回拒</option>
+                            <option value="3">已入库</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline" >
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Report-back-search" id="Ord-Report-back-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+
+
+                    <button id="add" class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+                    <button id="Save" class="layui-btn layuiadmin-btn-admin layui-btn-normal" data-type="Save" style="float:right">入库</button>
+                    <button id="Rrfuse" class="layui-btn layuiadmin-btn-admin layui-btn-warm" data-type="Rrfuse" style="float:right">回拒</button>
+                    <button id="confirm" class="layui-btn layuiadmin-btn-admin" data-type="confirm" style="float:right">确认</button>
+
+
+            </div>
+
+            <table id="Ord_Report_Table" lay-filter="Ord_Report_Table"></table>
+            <script type="text/html" id="table-Report-admin">
+                @if (ViewBag.RoleID == "0" || ViewBag.RoleID == "1")
+                {
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                }
+
+               
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var $ = layui.$;
+		var form = layui.form;
+		var userid = "";
+        //日期范围
+        laydate.render({
+            elem: '#Report_CreatTime'
+          , range: "~"
+        });
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "1")
+        {
+            //禁止按钮
+            $('#add').addClass('layui-btn-disabled').attr('disabled', "true");
+        }
+
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "5")
+        {
+            //禁止按钮
+            $('#Save').addClass('layui-btn-disabled').attr('disabled', "true");
+            $('#Rrfuse').addClass('layui-btn-disabled').attr('disabled', "true");
+            $('#confirm').addClass('layui-btn-disabled').attr('disabled', "true");
+		}
+		if (@ViewBag.RoleID == "5") {
+			userid = "@ViewBag.UserID";
+		}
+
+        //所属仓库
+        $.ajax({
+            url: '/Index/GetWarehouseData',
+            dataType: 'json',
+            type: 'Post',
+            success: function (data) {
+                $.each(data.data, function (index, item) {
+                    $('#Warehouse').append(new Option(item.Warehouse_Name, item.Warehouse_ID)); // 下拉菜单里添加元素
+                });
+                layui.form.render("select");
+                //重新渲染 固定写法
+            }
+        })
+
+        //用户管理
+		table.render({
+			elem: '#Ord_Report_Table',
+			url: '/Army/GetReportData?UserID=' + userid, //模拟接口
+            page: true,
+            cols: [
+                [{
+                    type: 'checkbox',
+                    fixed: 'left'
+                }, {
+                    field: 'Report_ArmyName',
+                    title: '军械名称'
+                }, {
+                    field: 'Report_Num',
+                    title: '军械数量'
+                }, {
+                    field: 'Report_Batch',
+                    title: '军械批次'
+                },{
+                    field: 'Report_WarehouseName',
+                    title: '仓库名称'
+                }, {
+                    field: 'Report_UserName',
+                    title: '入库申请人'
+                }, {
+                    field: 'Report_CreatTime',
+                    title: '申请时间'
+                }, {
+                    field: 'Report_TransportName',
+                    title: '入库配送人'
+                },{
+                    field: 'Report_TransportPhone',
+                    title: '入库配送人电话'
+                }, {
+                    field: 'Report_Status',
+                    title: '状态',
+                    templet: function (data) {
+                        if (data.Report_Status == 0) { return "已提交"; }
+                        if (data.Report_Status == 1) { return "已确认"; }
+                        if (data.Report_Status == 2) { return "已回拒"; }
+                        if (data.Report_Status == 3) { return "已入库"; }
+                                        
+                    }
+                }, {
+                    title: '操作',
+                    width: 150,
+                    align: 'center',
+                    fixed: 'right',
+                    toolbar: '#table-Report-admin'
+                }
+                ]
+            ],
+            text: '对不起，加载出现异常！'
+        });
+        //监听工具条
+        table.on('tool(Ord_Report_Table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                if (data.Report_Status != 0 && data.Report_Status != 2) {
+                    layer.msg('只允许删除已提交以及已回拒状态的数据！', { icon: 7 });
+                }
+                else {
+                    layer.confirm('确定删除吗？', function (index) {
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/DeleteReport', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: data.Report_ID
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('删除成功！', { icon: 1 });
+                                    table.reload('Ord_Report_Table');
+                                } else {
+                                    layer.msg('删除失败！', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+
+            } else if (obj.event === 'edit') {
+                var tr = $(obj.tr);
+                if (data.Report_Status != 0) {
+                    layer.msg('只允许修改已提交状态的数据！', { icon: 7 });
+                } else {
+                    layer.open({
+                        type: 2,
+                        title: '采购入库修改',
+                        content: '/Army/ReportAddEdit?type=2&ID=' + data.Report_ID,
+                        area: ['420px', '500px'],
+                    })
+                }
+            }
+        });
+        //监听搜索
+        form.on('submit(Ord-Report-back-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Report_Table', {
+                where: field
+            });
+        });
+
+        //事件
+        var active = {      
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: '采购入库',
+                    content: '/Army/ReportAddEdit?type=1&ID=""',
+                    area: ['450px', '500px']
+                  
+                });
+            },
+            
+            confirm: function () {
+                var checkStatus = table.checkStatus('Ord_Report_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Report_Status != 0) {
+                        PdBool = false;
+                        return layer.msg('只允许确认已提交状态的数据!', { icon: 7 });
+                    }
+                });
+                if(PdBool){
+                    layer.confirm('确认提交吗？', function (index) {
+                        //循环取所有id
+                        var deleteS = "";;
+                        $.each(checkData, function (i, item) {
+                            deleteS = item.Report_ID;
+                        });
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateReport', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state:1
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已确认', { icon: 1 });
+                                    table.reload('Ord_Report_Table');
+                                } else {
+                                    layer.msg('确认失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+                    
+                    });
+                }
+            },
+            Rrfuse: function () {
+                var checkStatus = table.checkStatus('Ord_Report_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Report_Status != 0) {
+                        PdBool = false;
+                        return layer.msg('只允许回拒已提交状态的数据!', { icon: 7 });
+                    }
+                });
+                if (PdBool) {
+                    layer.confirm('确认提交吗？', function (index) {
+                        //循环取所有id
+                        var deleteS = "";;
+                        $.each(checkData, function (i, item) {
+                            deleteS = item.Report_ID;
+                        });
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateReport', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 2
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已回拒!', { icon: 1 });
+                                    table.reload('Ord_Report_Table');
+                                } else {
+                                    layer.msg('回拒失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            },
+            Save: function () {
+                var checkStatus = table.checkStatus('Ord_Report_Table'),
+                    checkData = checkStatus.data; //得到选中的数据
+                var PdBool = true;
+                if (checkData.length != 1) {
+                    return layer.msg('请选择一条数据!', { icon: 7 });
+                }
+                $.each(checkData, function (i, item) {
+                    if (item.Report_Status != 1) {
+                        PdBool = false;
+                        return layer.msg('只允许入库已确认状态的数据!', { icon: 7 });
+                    }
+                });                
+                if (PdBool) {
+                    layer.confirm('确认提交吗？', function (index) {
+                        //循环取所有id
+                        var deleteS = "";;
+                        $.each(checkData, function (i, item) {
+                            deleteS = item.Report_ID;
+                        });
+
+                        $.ajax({
+                            type: "Post",
+                            url: '/Army/UpdateReport', //配置删除功能
+                            dataType: 'json',
+                            data: {
+                                IDs: deleteS,
+                                state: 3
+                            },
+                            success: function (data) {
+                                if (data == true) {
+                                    layer.msg('已入库', { icon: 1 });
+                                    table.reload('Ord_Report_Table');
+                                } else {
+                                    layer.msg('入库失败', { icon: 2 });
+                                }
+
+                            }
+                        });
+
+                    });
+                }
+            }
+        }
+        //监测点击，根据值确认执行哪个操作
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+</script>
+
+

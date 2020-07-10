@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "Record";
+}
+
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">巡查人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="Record_UserName" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="Record_Time" name="Record_Time" placeholder="~">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="Ord-Record-front-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button id="add" class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+            </div>
+
+            <table id="Ord_Record_Table" lay-filter="Ord_Record_Table"></table>
+            <script type="text/html" id="table-Record-admin">
+                @if (ViewBag.RoleID == "0" || ViewBag.RoleID == "3")
+                {
+                    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+
+<script>
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table;
+        var laydate = layui.laydate;
+        var $ = layui.$;
+        var form = layui.form;
+        //日期范围
+        laydate.render({
+            elem: '#Record_Time'
+          , range: "~"
+        });
+
+        if (@ViewBag.RoleID != "0" && @ViewBag.RoleID != "3")
+        {
+            //禁止按钮
+            $('#add').addClass('layui-btn-disabled').attr('disabled', "true");
+        }
+        //用户管理
+        table.render({
+            elem: '#Ord_Record_Table',
+            url: '/Record/GetRecordData',
+            page:true,
+            cols: [
+                [ {
+                    field: 'Record_UserName',
+                    title: '巡查人'
+                }, {
+                    field: 'Record_Time',
+                    title: '巡查时间'
+                }, {
+                    field: 'Record_Remarks',
+                    title: '巡查记录'
+                }, {
+                    title: '操作',
+                    width: 150,
+                    align: 'center',
+                    fixed: 'right',
+                    toolbar: '#table-Record-admin'
+                }
+              ]
+            ],
+            text: '对不起，加载出现异常！'
+        });
+
+        //监听搜索
+        form.on('submit(Ord-Record-front-search)', function (data) {
+            var field = data.field;
+
+            //执行重载
+            table.reload('Ord_Record_Table', {
+                where: field
+            });
+        });
+        //监听工具条
+        table.on('tool(Ord_Record_Table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('确定删除吗？', function (index) {
+                    $.ajax({
+                        type: "Post",
+                        url: '/Record/DeleteRecord', //配置删除功能
+                        dataType: 'json',
+                        data: {
+                            RecordID: data.Record_ID
+                        },
+                        success: function (data) {
+                            if (data == true) {
+                                layer.msg('删除成功！', { icon: 1 });
+                                table.reload('Ord_Record_Table');
+                            } else {
+                                layer.msg('删除失败！', { icon: 2 });
+                            }
+
+                        }
+                    });
+
+                });
+                
+            } else if (obj.event === 'edit') {
+                var tr = $(obj.tr);
+
+                layer.open({
+                    type: 2,
+                    title: '编辑军械',
+                    content: '/Record/RecordAddEdit?type=2&ID=' + data.Record_ID,
+                    area: ['420px', '300px'],
+                })
+            }
+        });
+        //事件
+        var active = {
+            add: function () {
+                layer.open({
+                    type: 2,
+                    title: '巡查记录新增',
+                    content: '/Record/RecordAddEdit?type=1',
+                    area: ['420px', '300px']
+                });
+            }
+        }
+        //监测点击，根据值确认执行哪个操作
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+    });
+</script>
+

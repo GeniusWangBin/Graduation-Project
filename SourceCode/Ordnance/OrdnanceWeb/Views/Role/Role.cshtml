@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Role";
+}
+
+<link rel="stylesheet" href="../../Customiz/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="../../Customiz/css/admin.css" media="all">
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="layui-card-body">
+            <table id="LAY-Role-manage" lay-filter="LAY-Role-manage"></table>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../Customiz/layui/layui.js"></script>
+<script>
+
+			layui.use( 'table',function() {
+			    var $ = layui.$,
+					form = layui.form,
+					table = layui.table;
+			    //用户管理
+			    table.render({
+			        elem: '#LAY-Role-manage',
+			        url: '/User/GetRoleData' //模拟接口
+                        ,
+			        cols: [
+                        [ {
+                            field: 'Role_Name',
+                            title: '角色名称'
+                        }, {
+                            field: 'Role_CreateTime',
+                            title: '角色创建时间'
+                        }]
+			        ],
+			        text: '对不起，加载出现异常！'
+			    });
+
+
+			});
+</script>
+
